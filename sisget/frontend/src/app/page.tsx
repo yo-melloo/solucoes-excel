@@ -8,7 +8,7 @@ export default function Home() {
         flexDirection: 'column', 
         justifyContent: 'center', 
         alignItems: 'center',
-        background: 'radial-gradient(circle at center, rgba(194, 0, 0, 0.15) 0%, transparent 70%)',
+        background: 'radial-gradient(circle at center, rgba(103, 190, 217, 0.15) 0%, transparent 70%)',
         textAlign: 'center',
         padding: '0 20px'
       }}>

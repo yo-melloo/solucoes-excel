@@ -1,17 +1,17 @@
 :root {
   --background: #0a0a0c;
   --foreground: #f4f4f5;
-  --primary: #c20000; /* Satélite Norte Red */
-  --primary-hover: #e60000;
+  --primary: #67bed9; /* Satélite Norte Blue */
+  --primary-hover: #82d1e8;
   --secondary: #1e1e24;
   --accent: #3b82f6;
-  
+
   --glass-bg: rgba(30, 30, 36, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-  
-  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-outfit: 'Outfit', system-ui, -apple-system, sans-serif;
+
+  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
+  --font-outfit: "Outfit", system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -30,7 +30,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-outfit);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -70,7 +75,7 @@ canvas {
 .btn-primary:hover {
   background: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(194, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(103, 190, 217, 0.3);
 }
 
 .gradient-text {
