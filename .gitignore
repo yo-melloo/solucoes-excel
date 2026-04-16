@@ -1,0 +1,66 @@
+# === SISGET WEB MONOREPO GITIGNORE ===
+
+# [ IDEs and Editors ]
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# [ OS Files ]
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# [ Environment Variables ]
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# [ Node.js / Next.js (Frontend) ]
+sisget/frontend/node_modules/
+sisget/frontend/.next/
+sisget/frontend/out/
+sisget/frontend/build/
+sisget/frontend/.vercel
+sisget/frontend/npm-debug.log*
+sisget/frontend/yarn-debug.log*
+sisget/frontend/yarn-error.log*
+sisget/frontend/.pnpm-debug.log*
+
+# [ Java / Maven (Backend) ]
+sisget/backend/target/
+sisget/backend/*.class
+sisget/backend/*.jar
+sisget/backend/*.war
+sisget/backend/*.ear
+sisget/backend/.mvn/
+sisget/backend/bin/
+
+# [ Databases ]
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# [ Python (Scripts and Agents) ]
+__pycache__/
+*.py[cod]
+*$py.class
+seeds/*.json # Opcional: manter se quiser os dados no git, mas geralmente seeds grandes ficam de fora. Aqui vamos permitir (por sua solicitação anterior).
+!seeds/*.json
+
+# [ Logs ]
+*.log
+
+# [ Temporary Files ]
+tmp/
+temp/
+inspect_*.py
