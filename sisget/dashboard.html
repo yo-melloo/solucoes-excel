@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Compartilhado - Satélite Norte</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #map { height: 100vh; width: 100%; }
+        .info-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            max-width: 300px;
+        }
+        .info-panel h2 { margin-top: 0; font-size: 18px; color: #d32f2f; }
+        .vehicle-item { margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        .vehicle-item:last-child { border: none; }
+        .status-online { color: green; font-weight: bold; }
+        .status-offline { color: gray; }
+        .last-update { font-size: 11px; color: #666; }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+    
+    <div class="info-panel">
+        <h2>Frota Monitorada</h2>
+        <div id="vehicle-list">Carregando dados...</div>
+        <div class="last-update" id="total-update">Última leitura: --:--</div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([-15.7942, -47.8822], 4);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        const markers = {};
+        const targetVehicles = ["19015", "19018", "24012"];
+
+        async function updateMap() {
+            try {
+                // Ajustado para buscar dentro da pasta bot/
+                const response = await fetch('bot/fleet_status.json');
+                if (!response.ok) throw new Error('Não foi possível carregar o arquivo JSON');
+                const data = await response.json();
+                
+                const listEl = document.getElementById('vehicle-list');
+                listEl.innerHTML = '';
+
+                let bounds = [];
+
+                data.forEach(v => {
+                    const id = v.VEICPREFIXO || v.VEICCODIGO;
+                    
+                    if (targetVehicles.includes(id)) {
+                        const lat = parseFloat(v.RASTLATITUDE);
+                        const lng = parseFloat(v.RASTLONGITUDE);
+
+                        if (!isNaN(lat) && !isNaN(lng)) {
+                            const pos = [lat, lng];
+                            bounds.push(pos);
+
+                            const locationInfo = v.PCID ? v.PCID.split('|COL|')[3] || 'N/A' : 'N/A';
+                            const popupContent = `
+                                <b>Veículo: ${id}</b><br>
+                                Placa: ${v.VEICPLACA}<br>
+                                Velocidade: ${v.RASTVELOCIDADE} km/h<br>
+                                Local: ${locationInfo}<br>
+                                <small>Atualizado em: ${v.RASTDATA}</small>
+                            `;
+
+                            if (markers[id]) {
+                                markers[id].setLatLng(pos).getPopup().setContent(popupContent);
+                            } else {
+                                markers[id] = L.marker(pos)
+                                    .addTo(map)
+                                    .bindPopup(popupContent);
+                            }
+
+                            listEl.innerHTML += `
+                                <div class="vehicle-item">
+                                    <strong>${id}</strong> - <span class="status-online">${v.RASTVELOCIDADE} km/h</span><br>
+                                    <small>${v.RASTDATA}</small>
+                                </div>
+                            `;
+                        }
+                    }
+                });
+
+                if (bounds.length > 0) {
+                    map.fitBounds(bounds, { padding: [50, 50] });
+                }
+
+                document.getElementById('total-update').innerText = 'Última leitura: ' + new Date().toLocaleTimeString();
+
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                document.getElementById('vehicle-list').innerHTML = '<span style="color:red">Erro ao carregar dados do bot. Certifique-se que o JSON existe em bot/fleet_status.json</span>';
+            }
+        }
+
+        updateMap();
+        setInterval(updateMap, 30000);
+
+    </script>
+</body>
+</html>
