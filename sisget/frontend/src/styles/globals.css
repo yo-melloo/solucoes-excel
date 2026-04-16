@@ -1,17 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
+  --background: #f1f5f9; /* Um pouco mais cinza para destacar os cards brancos */
+  --foreground: #020617; /* Slate 950 */
+  --foreground-muted: #334155; /* Slate 700 para melhor contraste em descrições */
+  --primary: #67bed9;
+  --primary-hover: #82d1e8;
+  --secondary: #e2e8f0; /* Slate 200 para elementos secundários mais visíveis */
+  --accent: #3b82f6;
+
+  --sidebar-bg: #f8fafc;
+  --navbar-bg: rgba(255, 255, 255, 0.9);
+  --card-bg: #ffffff;
+  --border: #94a3b8; /* Slate 400 para bordas bem definidas */
+
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.15);
+  --glass-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.1);
+
+  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
+  --font-outfit: "Outfit", system-ui, -apple-system, sans-serif;
+}
+
+.dark {
   --background: #0a0a0c;
   --foreground: #f4f4f5;
-  --primary: #67bed9; /* Satélite Norte Blue */
-  --primary-hover: #82d1e8;
+  --foreground-muted: #a1a1aa;
   --secondary: #1e1e24;
-  --accent: #3b82f6;
+  
+  --sidebar-bg: #0a0a0b;
+  --navbar-bg: rgba(10, 10, 11, 0.8);
+  --card-bg: #111114;
+  --border: #1e1e24;
 
   --glass-bg: rgba(30, 30, 36, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-
-  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
-  --font-outfit: "Outfit", system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -27,27 +53,11 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter);
+  transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-outfit);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
-
+/* Utilize estas classes para estilizar novos componentes */
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
@@ -79,22 +89,7 @@ canvas {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+  background: linear-gradient(135deg, var(--foreground) 0%, #64748b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #444;
 }

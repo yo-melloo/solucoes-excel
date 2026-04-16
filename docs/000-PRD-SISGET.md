@@ -247,6 +247,7 @@ Base de dados inicial com 604 motoristas e 170 veículos (extraídos da aba ocul
 ### 📋 Backlog (pós-Beta 2)
 - Módulo de Gestão de RAVs
 - Módulo de Gestão de Pessoal (Dobras / Refeição)
+- Chat em Tempo Real (Lateral Direita)
 - Pontos de Apoio (PAs)
 - Bot Selenium de rastreamento
 - Integração VITAE
@@ -282,8 +283,8 @@ Base de dados inicial com 604 motoristas e 170 veículos (extraídos da aba ocul
 
 ## 12. Referências
 
-- `docs/001-Especificação Técnica - Sistema de Gerenciamento de Tráfego (SISGET WEB).md`
-- `docs/002-Documento de Prototipagem - Sistema de Gestão de Tráfego (SISGET WEB).md`
+- `docs/001-Especificação Técnica...`
+- `docs/ADRs/002-Layout-Design-Aesthetics.md`
 - `docs/Prototipo 001 - Wireframe escrito.pdf`
 - `SISGET - SISTEMA DE GERENCIAMENTO DE TRÁFEGO.xlsx` (planilha original, 12 abas)
 - `seeds/` — Dados iniciais extraídos da planilha para seeding do banco de dados

@@ -64,3 +64,15 @@ seeds/*.json # Opcional: manter se quiser os dados no git, mas geralmente seeds 
 tmp/
 temp/
 inspect_*.py
+.backup/
+
+# [ Binary Data and Large Files ]
+*.xlsx
+*.doc
+*.jpg
+*.png
+
+# [ Obsidian ]
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/last-state.json
