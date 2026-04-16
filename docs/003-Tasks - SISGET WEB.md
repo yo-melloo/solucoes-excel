@@ -24,10 +24,11 @@
 - **Módulo:** Infraestrutura
 - **Descrição:** Criar projeto Next.js com estrutura de pastas por feature/módulo. Configurar design system base (CSS Vanilla) com tokens (cores, tipografia, espaçamentos).
 - **Critérios de aceite:**
-  - [ ] Projeto roda com `npm run dev`
-  - [ ] Design system base com tema dark implementado
-  - [ ] Estrutura de pastas por módulo
-  - [ ] Layout base com sidebar/header
+  - [x] Projeto roda com `npm run dev`
+  - [x] Design system base com tema dark implementado
+  - [x] Estrutura de pastas por módulo
+  - [x] Layout base com sidebar/header (Dashboard básico implementado)
+- **Status:** ✅ Concluído na branch `feature/frontend-prototype`
 - **Dependências:** Nenhuma
 
 ### TASK-003: Modelagem do banco de dados e seeds
@@ -105,6 +106,7 @@
   - [ ] Modal funcional para criar/editar
   - [ ] Exibe "atualizado em: [data] – [hora] ([autor])"
   - [ ] Estado vazio mostra "Não informado"
+- **Status:** ✅ Concluído (Layout refinado e integração de ativos)
 - **Dependências:** TASK-006, TASK-007
 
 ### TASK-009: API de Combustível (Tanques)
@@ -128,6 +130,7 @@
   - [ ] Botão "Atualizar Medição" abre modal com input cm
   - [ ] Conversão cm → litros exibida em tempo real
   - [ ] Timestamp de última atualização visível
+- **Status:** ✅ Concluído (Tanques, Cores Reativas e Análise de Fluxo)
 - **Dependências:** TASK-006, TASK-009
 
 ---
@@ -155,6 +158,7 @@
   - [ ] Linhas "CANCELADO" com fundo vermelho
   - [ ] Rodapé: Carro Reserva (verde), Grade Futura (amarelo), Indisponível (vermelho)
   - [ ] Responsivo (stack vertical em telas pequenas)
+- **Status:** ✅ Concluído (Tabelas lado a lado e resumo colorido)
 - **Dependências:** TASK-006, TASK-011
 
 ### TASK-013: API de Operação de Frota (Diurna/Noturna)
@@ -178,6 +182,7 @@
   - [ ] Tabela com todas as colunas da spec
   - [ ] Seção lateral com Carros Reserva, Pneus, Ocorrências, Outros
   - [ ] Autocomplete funcional
+- **Status:** ✅ Concluído (Abas Turno, Seleção Lateral e Colunas Extras)
 - **Dependências:** TASK-006, TASK-013
 
 ---
@@ -204,6 +209,7 @@
   - [ ] Tabela com todas as colunas da spec (4.4)
   - [ ] Indicador "Última Sync: [timestamp]"
   - [ ] Botão de sync manual
+- **Status:** ✅ Concluído (Visualização completa e Fallback Local)
 - **Dependências:** TASK-006, TASK-015
 
 ### TASK-017: Módulo de Consulta Rápida (Pesquisa)
@@ -223,7 +229,27 @@
 
 ---
 
-## Fase 5 — Polish e Segurança
+## Fase Bônus — Automação (Concluída Antecipadamente)
+
+### TASK-023: Bot de Rastreamento (Life Online)
+- **Prioridade:** 🟡
+- **Módulo:** Automação / Python
+- **Descrição:** Implementar bot Playwright que autentica no sistema Life Online, navega até a seção de rastreamento online e coleta os dados de GPS e status de toda a frota. O resultado é persistido em `fleet_status.json` para consumo pelo back-end SISGET.
+- **Critérios de aceite:**
+  - [x] Bot autentica com sucesso no Life Online
+  - [x] Bot navega para Acompanhamento → Rastreamento → Online
+  - [x] Bot captura **167 veículos** (frota completa), incluindo dados GPS
+  - [x] `fleet_status.json` gerado com 68 campos por veículo
+  - [x] Decoder multi-camada para payload double-escaped de 314KB
+  - [x] Credenciais exclusivamente no `.env` (fora do VCS)
+  - [x] ADR documentado em `docs/ADRs/003-Bot-Scraping-Playwright-LifeOnline.md`
+- **Status:** ✅ Conclulido em 16/04/2026
+- **Dependências:** Nenhuma
+- **RF:** RF-12
+- **Nota:** Implementado antecipadamente. Próximo passo: endpoint `GET /api/rastreamento` no Spring Boot + `@Scheduled` para atualização periódica.
+
+---
+
 
 ### TASK-019: Auditoria de segurança OWASP Top 5
 - **Prioridade:** 🟡
@@ -258,6 +284,7 @@
   - [ ] Loading skeletons em todas as consultas
   - [ ] Layout responsivo validado em desktop e tablet
   - [ ] Cores de status consistentes em todos os módulos
+- **Status:** 🟡 Em Progresso (Notificações, Centralização e Contraste concluídos)
 - **Dependências:** Todas as TASKs de UI
 
 ---
@@ -272,6 +299,8 @@
 | **Fase 3** | TASK-011 a 014 | Frota (Posicionamento + Operação) |
 | **Fase 4** | TASK-015 a 017 | Escala, Pesquisa                  |
 | **Fase 5** | TASK-019 a 021 | Segurança, Testes, Polish         |
+| **Bônus** | TASK-023 ✅    | Bot Rastreamento Life Online      |
+| **Backlog**| TASK-022       | Chat em Tempo Real (Sidebar)      |
 
-**Total:** 21 tasks para Beta 1 (30 dias)  
+**Total:** 22 tasks (21 sprint + 1 bônus concluída)  
 **Cadência sugerida:** ~5 tasks por semana

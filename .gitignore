@@ -51,16 +51,36 @@ sisget/backend/bin/
 *.db-journal
 
 # [ Python (Scripts and Agents) ]
+sisget/bot/.venv/
+sisget/bot/venv/
+.venv/
+venv/
 __pycache__/
 *.py[cod]
 *$py.class
-seeds/*.json # Opcional: manter se quiser os dados no git, mas geralmente seeds grandes ficam de fora. Aqui vamos permitir (por sua solicitação anterior).
-!seeds/*.json
-
-# [ Logs ]
 *.log
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.playwright/
+
+# [ Bot Output / Artefatos de análise ]
+sisget/bot/fleet_status.json
+sisget/bot/network_log.json
+sisget/bot/captured_json.json
+sisget/bot/*.png
+sisget/bot/analyze_*.py
+sisget/bot/diagnose.py
+sisget/bot/validate_*.py
 
 # [ Temporary Files ]
 tmp/
 temp/
 inspect_*.py
+.backup/
+
+
+# [ Obsidian ]
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/last-state.json

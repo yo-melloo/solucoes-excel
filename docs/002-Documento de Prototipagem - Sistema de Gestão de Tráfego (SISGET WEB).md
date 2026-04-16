@@ -1,159 +1,93 @@
 # Documento de Prototipagem — SISGET WEB (Sistema de Gestão de Tráfego)
 
-> **Versão:** 1.1  
-> **Atualizado em:** 15/04/2026  
-> **Referência:** `000-PRD-SISGET.md`, `001-Especificação Técnica`  
+> **Versão:** 1.2 (Baseada no Protótipo Figma)  
+> **Atualizado em:** 16/04/2026  
+> **Referência:** `000-PRD-SISGET.md`, `001-Especificação Técnica`, `Figma Export v1.0`
 
-Este documento formaliza o protótipo funcional do sistema, detalhando a integração de dados e os módulos de controle operacional.
-
----
-
-## 1. Arquitetura de Integração e Dados
-
-* **Persistência:** SQLite (desenvolvimento) → PostgreSQL (produção).
-* **Fonte de Dados Primária:** Planilha **Escala do Fluxo** hospedada no **SharePoint Excel Online**. O sistema deve consumir essa planilha diariamente e segregar os dados por base/turno.
-* **Seeds:** Base inicial de 604 motoristas, 170 veículos, 85 RAVs e 5 itens de reserva (diretório `/seeds/`).
-* **Processamento Híbrido:** Sistema automático com interface aberta para correções e inserções manuais.
-* **Estado da Interface:** Uso de componentes de *Skeleton* e *Progress* para sinalizar o carregamento de dados.
+Este documento formaliza o protótipo funcional do sistema, detalhando a integração de dados e a nova interface intuitiva baseada em módulos e indicadores de performance.
 
 ---
 
-## 2. Módulo de Controle Operacional (Garagem)
+## 1. Arquitetura de Interface (UX/UI)
 
-### 2.1 Reservas (Oficina)
+A nova interface adota um design de **Alta Fidelidade** com foco em usabilidade e redução de carga cognitiva para os auxiliares de tráfego.
 
-* **Controle de Recursos:** Tabelas específicas para Carros reserva e Pneus reserva.
-* **Campos:** CÓD, TIPO, STATUS (Disponível/Indisponível), DESCRIÇÃO.
-* **Interface:** Visualização em cards 1x1 com modais para adição/edição de registros.
-* **Timestamp:** Cada atualização registra data/hora e autor.
-
-### 2.2 Telemetria de Combustível
-
-* **Monitoramento de Tanques:** Visualização de volume atual (ex: 3780/15.000 litros). 2 tanques de 15.000L.
-* **Botão "Atualizar Medição":** Abre calculadora de volumetria embutida para converter medições lineares (cm) em volume real com base na tabela técnica de medição.
-* **Contexto:** Primeira tarefa do auxiliar ao iniciar o plantão (central solicita a informação todas as manhãs).
+- **Tema:** Dark Mode profundo com acentuações em Azul Satélite (#67bed9).
+- **Design System:** Uso extensivo de **Glassmorphism**, gradientes sutis e micro-interações.
+- **Indicadores Rápidos (Stats):** Localizados no topo do dashboard para visualização imediata de:
+  - Carros em Trânsito (Contagem ativa).
+  - Ocorrências Abertas (Status crítico).
+  - Status do Plantão (Identificação do responsável atual).
+- **Widget de Contexto:** Previsão do tempo local (Imperatriz) integrada para alertar sobre condições de tráfego.
 
 ---
 
-## 3. Módulo de Frota e Logística
+## 2. Navegação por Módulos (Cards de Acesso)
 
-### 3.1 Posicionamento e Previsão
+O acesso às funcionalidades é feito via cards interativos com feedback visual (hover states) e ícones semânticos:
 
-* **Distribuição Geográfica:** Organização do posicionamento de frota por bases estratégicas: **Imperatriz, São Luís e Belém**.
-* **Estilização:** Linhas "CANCELADO" em vermelho. Rodapé resumo com Carro Reserva (verde), Grade Futura (amarelo), Indisponível (vermelho).
-* **Planejamento Temporal:** Segregação entre Frota Diurna e Frota Noturna.
-
-### 3.2 Operação de Frota (Diurna / Noturna)
-
-Duas tabelas idênticas em estrutura, separadas por turno:
-
-| Coluna | Descrição |
-|--------|-----------|
-| DATA | Data da operação |
-| SAÍDA | Horário de saída |
-| SERVIÇO | Código do serviço |
-| FROTA | Prefixo do veículo |
-| PLACA | Placa do veículo |
-| MOTORISTA | Nome + Matrícula (operação solo) |
-| LINHA | Trecho com horário |
-| LOC. ATUAL | Localização via rastreamento (futuro) |
-| PREVISÃO | ETA ou status (GARAGEM) |
-
-* **Seção lateral:** CARROS RESERVA, PNEUS RESERVA, OCORRÊNCIAS, OUTROS.
-
-### 3.3 Escala do Fluxo (Diária)
-
-Fonte: **SharePoint Excel Online**. Campos: Dia da Semana, Data, Garagem, Carro, HR. Garagem, HR. Saída, Origem, Destino, Motorista, Linha, Serviço.
+- **Controle de Garagem:** Gestão de reservas, pneus e medição de tanques.
+- **Controle de Frota:** Posicionamento estratégico e operações turnadas.
+- **Escala do Fluxo:** Visualização em tempo real (Sync SharePoint).
+- **Consulta Rápida:** Spotlight global (Ctrl+K) para buscas cross-entidade.
 
 ---
 
-## 4. Módulo de Consulta Rápida (Pesquisa)
+## 3. Detalhamento de Funcionalidades Nucleares
 
-Interface dedicada para busca de dados avulsos:
+### 3.1 Telemetria e Combustível (Garagem)
 
-* **Busca por Placa** → retorna Frota (prefixo).
-* **Busca por Frota** → retorna Placa.
-* **Busca por Nome/Matrícula** → retorna dados do motorista.
-* **Spotlight (Ctrl+K):** Acesso rápido global a partir de qualquer tela.
+- **Interface:** Barras de progresso dinâmicas e modais de entrada para medição em centímetros.
+- **Calculadora:** Conversão automática baseada na tabela técnica de 15.000L.
 
----
+### 3.2 Operação de Frota
 
-
-## 5. (Reservado)
-
--- DESCARTAR!
+- **Modo Turno:** Alternância fluida entre visão Diurna e Noturna.
+- **Feedback Visual:** Cores vinculadas ao status (Canceled = Red, In Transit = Blue, Pending = Amber).
 
 ---
 
-## 6. Próximos Passos de Desenvolvimento
+## 4. Estrutura do Protótipo Visual (Dashboard v2)
 
-* [ ] Validação das tabelas de volumetria para a calculadora de tanques.
-* [ ] Definição da interface de consumo da Escala do Fluxo (SharePoint Excel).
-* [ ] Prototipagem do módulo de Consulta Rápida (Pesquisa).
-* [ ] Design de UX/UI no Figma (pendente com desenvolvedor).
+```text
+[ HEADER: Olá, Usuário! (Saudação Dinâmica) | Data | Widget Clima: 28°C Imperatriz ]
 
----
+---------------------------------------------------------------------------------
+| INDICADORES (STATS)                                                           |
+| [ Carros em Trânsito: 24 ] | [ Ocorrências: 3 ] | [ Plantão: GUSTAVO MELLO ]  |
+---------------------------------------------------------------------------------
 
-## 7. Protótipo Visual: Dashboard SISGET
+---------------------------------------------------------------------------------
+| MÓDULOS PRINCIPAIS                                                            |
+|                                                                               |
+| [ ⛽ GARAGEM ]        [ 🚌 FROTA ]          [ 📅 ESCALA ]        [ 🔍 PESQUISA ] |
+| Reservas / Tanques  | Bases / Operação    | Sync SharePoint   | Busca Global    |
+---------------------------------------------------------------------------------
 
-``` text
-[ CABEÇALHO: Saudação Dinâmica | 🌦️ Previsão (Mock) | 🔔 Alertas ]
-
-=======================================================================
-| 2. CONTROLE DE GARAGEM                                              |
-=======================================================================
-| [ CARD: CARROS RESERVA ]  | [ CARD: PNEUS RESERVA ]                |
-| (Tabela: CÓD/STATUS)      | (Tabela: CÓD/STATUS)                   |
-| [ + Adicionar ]            | [ + Adicionar ]                        |
-|---------------------------------------------------------------------|
-| 2.2 GESTÃO DE COMBUSTÍVEL                                           |
-| Tanque 01: [|||||||---] 3.780 / 15.000 L                            |
-| Tanque 02: [||||||||||] 15.000 / 15.000 L                           |
-|---------------------------------------------------------------------|
-| [ ATUALIZAR MEDIÇÃO ]                                               |
-=======================================================================
-
-=======================================================================
-| 3.1 MODAL: POSICIONAMENTO DE FROTA                                  |
-=======================================================================
-| [ BASE IMPERATRIZ ]           | [ BASE SÃO LUÍS ]  | [ BASE BELÉM ]|
-|------------------------------ |---------------------|----------------|
-| DATA | FROTA | HORA | OR|DEST | (Repetir colunas)   | (Idem)        |
-| 15/04| 24003 | 07:12| BEL|GYN |                     |                |
-| 15/04| CANC. | 09:30| THE|GYN |                     |                |
-|-------------------------------|---------------------|----------------|
-| [ RODAPÉ ]                    | [ RODAPÉ ]          | [ RODAPÉ ]    |
-| CARRO RESERVA (Verde)        | CARRO RESERVA       | CARRO RESERVA |
-| GRADE FUTURA (Amarelo)       | GRADE FUTURA        | GRADE FUTURA  |
-| INDISPONÍVEL (Vermelho)      | INDISPONÍVEL        | INDISPONÍVEL  |
-=======================================================================
-
-=======================================================================
-| 3.2 CONTROLE DE OPERAÇÃO (DIURNA / NOTURNA)                         |
-=======================================================================
-| DATA | SAÍDA| SERV | FROTA | MOTORISTA | LINHA | LOC. | PREVISÃO   |
-|------|------|------|-------|-----------|-------|------|------------|
-| 15/04| 07:12| 2014 | 24014 | RODRIGO   |BELxGYN| ---  | [EM ROTA]  |
-| 15/04| 08:00| 1072 | 24001 | JOSE N.   |SLZxGYN| ---  | [GARAGEM]  |
-| 15/04| 09:30| CANC.| CANC. | CANCELADO |IMPxVLR| ---  | [---]      |
-=======================================================================
-
-=======================================================================
-| 4. CONSULTA RÁPIDA (PESQUISA)                        [Ctrl+K]       |
-=======================================================================
-| DIGITE PLACA → RESULTADO (FROTA)                                    |
-| DIGITE FROTA → RESULTADO (PLACA)                                    |
-| DIGITE NOME/MAT → RESULTADO (MOTORISTA)                             |
-=======================================================================
-
-[ Escala do Fluxo: SharePoint | Última Sync: 07:38 ]
+[ FOOTER: Última Sincronização SharePoint: 07:38 | Copyright Satélite Norte ]
 ```
 
 ---
 
-## 8. Módulos Futuros (não incluir agora)
+## 5. Próximos Passos (Sprint Beta 1)
 
-* **Gestão de RAVs:** Seeds com 85 registros prontos em `/seeds/ravs.json`.
-* **Gestão de Pessoal:** Controle de Dobras e horários de Refeição.
-* **Pontos de Apoio (PAs):** Monitoramento de Grajaú, Araguaína e Santa Inês.
-* **Bot de Rastreamento:** Automação Selenium (integração VITAE).
+- [x] Design de UX/UI no Figma (Implementado no protótipo v2).
+- [ ] Integração do backend Spring Boot com a UI via Axios/Fetch.
+- [ ] Implementação da Calculadora de Tanques no Dashboard de Garagem.
+- [ ] Configuração do Middleware de Autenticação JWT.
+
+---
+
+## 6. Módulos Auxiliares Documentados
+
+- **Gestão de Pessoal:** Integrada na visão de Frota (Motoristas).
+- **Segurança:** Auditoria de acessos via logs de alteração em cada módulo.
+
+---
+
+## 7. Módulos Futuros (não incluir agora)
+
+- **Gestão de RAVs:** Seeds com 85 registros prontos em `/seeds/ravs.json`.
+- **Gestão de Pessoal:** Controle de Dobras e horários de Refeição.
+- **Pontos de Apoio (PAs):** Monitoramento de Porangatu, Guaraí, Paragominas, Belém, São Luís e Santa Inês.
+- **Bot de Rastreamento:** Automação Selenium (integração VITAE).
