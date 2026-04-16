@@ -229,7 +229,27 @@
 
 ---
 
-## Fase 5 — Polish e Segurança
+## Fase Bônus — Automação (Concluída Antecipadamente)
+
+### TASK-023: Bot de Rastreamento (Life Online)
+- **Prioridade:** 🟡
+- **Módulo:** Automação / Python
+- **Descrição:** Implementar bot Playwright que autentica no sistema Life Online, navega até a seção de rastreamento online e coleta os dados de GPS e status de toda a frota. O resultado é persistido em `fleet_status.json` para consumo pelo back-end SISGET.
+- **Critérios de aceite:**
+  - [x] Bot autentica com sucesso no Life Online
+  - [x] Bot navega para Acompanhamento → Rastreamento → Online
+  - [x] Bot captura **167 veículos** (frota completa), incluindo dados GPS
+  - [x] `fleet_status.json` gerado com 68 campos por veículo
+  - [x] Decoder multi-camada para payload double-escaped de 314KB
+  - [x] Credenciais exclusivamente no `.env` (fora do VCS)
+  - [x] ADR documentado em `docs/ADRs/003-Bot-Scraping-Playwright-LifeOnline.md`
+- **Status:** ✅ Conclulido em 16/04/2026
+- **Dependências:** Nenhuma
+- **RF:** RF-12
+- **Nota:** Implementado antecipadamente. Próximo passo: endpoint `GET /api/rastreamento` no Spring Boot + `@Scheduled` para atualização periódica.
+
+---
+
 
 ### TASK-019: Auditoria de segurança OWASP Top 5
 - **Prioridade:** 🟡
@@ -279,7 +299,8 @@
 | **Fase 3** | TASK-011 a 014 | Frota (Posicionamento + Operação) |
 | **Fase 4** | TASK-015 a 017 | Escala, Pesquisa                  |
 | **Fase 5** | TASK-019 a 021 | Segurança, Testes, Polish         |
+| **Bônus** | TASK-023 ✅    | Bot Rastreamento Life Online      |
 | **Backlog**| TASK-022       | Chat em Tempo Real (Sidebar)      |
 
-**Total:** 21 tasks para Beta 1 (30 dias)  
+**Total:** 22 tasks (21 sprint + 1 bônus concluída)  
 **Cadência sugerida:** ~5 tasks por semana

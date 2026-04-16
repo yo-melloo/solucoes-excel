@@ -171,6 +171,7 @@ Base de dados inicial com 604 motoristas e 170 veículos (extraídos da aba ocul
 | RF-09 | O sistema deve destacar visualmente linhas com status "CANCELADO" |
 | RF-10 | O sistema deve registrar timestamp e autor de cada atualização de dados |
 | RF-11 | (Removido) |
+| RF-12 | O sistema deve coletar e expor dados de rastreamento em tempo real via bot Playwright (Life Online) |
 
 ## 6. Requisitos Não Funcionais (RNF)
 
@@ -194,7 +195,7 @@ Base de dados inicial com 604 motoristas e 170 veículos (extraídos da aba ocul
 | **Front-end** | Next.js | SPA com SSR quando necessário |
 | **Back-end** | Java (Spring Boot) | API REST |
 | **Banco de Dados** | SQLite → PostgreSQL | Início com SQLite (dev local), migração gradual para PostgreSQL |
-| **Automação** | Python (Selenium) | Bot para coleta de dados de rastreamento (futuro) |
+| **Automação** | Python (Playwright) | Bot para coleta de dados de rastreamento (Life Online) |
 | **Deploy** | Local → VPS/Nuvem | Implementação gradual na Beta 2 |
 | **Seeds** | JSON (`/seeds/`) | Dados iniciais extraídos da planilha SISGET original |
 
@@ -229,8 +230,10 @@ Base de dados inicial com 604 motoristas e 170 veículos (extraídos da aba ocul
 - Cadastro de Motoristas e Veículos
 - Seeds de dados iniciais da planilha SISGET
 
+### ✅ Concluído Antecipado (Bot de Rastreamento)
+- **Bot Playwright** para coleta de rastreamento (Life Online): ✅ 167 veículos capturados com GPS (`sisget/bot/scrape_bot.py`). Decisão de arquitetura em `ADRs/003-Bot-Scraping-Playwright-LifeOnline.md`.
+
 ### ❌ Out (Beta 1)
-- Bot Selenium para rastreamento automático
 - Integração com sistema VITAE
 - Deploy em nuvem/VPS (movido para Beta 2)
 - Docker / containerização
@@ -249,8 +252,9 @@ Base de dados inicial com 604 motoristas e 170 veículos (extraídos da aba ocul
 - Módulo de Gestão de Pessoal (Dobras / Refeição)
 - Chat em Tempo Real (Lateral Direita)
 - Pontos de Apoio (PAs)
-- Bot Selenium de rastreamento
 - Integração VITAE
+- Agendador Spring (@Scheduled) para execução periódica do bot de rastreamento
+- Endpoint `GET /api/rastreamento` consumindo `fleet_status.json`
 - Relatórios exportáveis (PDF/Excel)
 
 ---
@@ -285,6 +289,7 @@ Base de dados inicial com 604 motoristas e 170 veículos (extraídos da aba ocul
 
 - `docs/001-Especificação Técnica...`
 - `docs/ADRs/002-Layout-Design-Aesthetics.md`
+- `docs/ADRs/003-Bot-Scraping-Playwright-LifeOnline.md`
 - `docs/Prototipo 001 - Wireframe escrito.pdf`
 - `SISGET - SISTEMA DE GERENCIAMENTO DE TRÁFEGO.xlsx` (planilha original, 12 abas)
 - `seeds/` — Dados iniciais extraídos da planilha para seeding do banco de dados
