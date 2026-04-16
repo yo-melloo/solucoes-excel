@@ -190,10 +190,28 @@ async def run():
 
         # ── Salva resultado ──
         if fleet_data:
+            # Correção de Polaridade (Brasil: Lat < 0, Lng < 0)
+            for v in fleet_data:
+                try:
+                    lat = float(v.get("RASTLATITUDE", 0))
+                    lng = float(v.get("RASTLONGITUDE", 0))
+                    # Se vierem positivas (comum em alguns exports mal formatados), invertemos
+                    if lat > 0: v["RASTLATITUDE"] = str(lat * -1)
+                    if lng > 0: v["RASTLONGITUDE"] = str(lng * -1)
+                except (ValueError, TypeError):
+                    continue
+
             output_path = os.path.join(os.path.dirname(__file__), "fleet_status.json")
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(fleet_data, f, ensure_ascii=False, indent=2)
+            
+            # Exporta também como JS para evitar erros de CORS em visualização local
+            js_path = os.path.join(os.path.dirname(__file__), "fleet_data.js")
+            with open(js_path, "w", encoding="utf-8") as f:
+                f.write(f"window.fleetData = {json.dumps(fleet_data, ensure_ascii=False)};")
+
             print(f"\n[+] SUCESSO: {fleet_size} veículos extraídos -> {output_path}")
+            print(f"[+] JS gerado para o Dashboard -> {js_path}")
 
             sample = fleet_data[0]
             has_gps_check = "RASTLATITUDE" in sample
