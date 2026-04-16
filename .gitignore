@@ -66,12 +66,6 @@ temp/
 inspect_*.py
 .backup/
 
-# [ Binary Data and Large Files ]
-*.xlsx
-*.doc
-*.jpg
-*.png
-
 # [ Obsidian ]
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
