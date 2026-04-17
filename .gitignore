@@ -1,0 +1,40 @@
+# === MONOREPO GITIGNORE (RAIZ) ===
+
+# [ IDEs / OS ]
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# [ Obsidian ]
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/last-state.json
+.obsidian/graph.json
+.obsidian/cached-indexing/
+.obsidian/plugins/omnisearch/cache/
+
+# [ Environment Variables ]
+**/ .env
+**/*.env
+
+# [ SISGET PROJECT ]
+sisget/frontend/node_modules/
+sisget/frontend/.next/
+sisget/frontend/out/
+sisget/backend/target/
+sisget/bot/.venv/
+sisget/bot/*.json
+sisget/bot/*.png
+
+# [ SISGET System & Runtime ]
+sisget/runtime/
+sisget/tools/
+sisget/scripts/*.zip
+sisget/scripts/*.tar.gz
+
+# [ Debug / Logs ]
+debug_*.txt
+brain/
+scrape_result.png
+login_page.html

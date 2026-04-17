@@ -1,0 +1,14 @@
+{
+  "pdfExportSettings": {
+    "includeName": true,
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+<<<<<<< HEAD:.obsidian/app.json
+  }
+=======
+  },
+  "promptDelete": false
+>>>>>>> 31b01da (feat: centralize Satélite Norte project and SISGET into root repository):Satélite Norte/.obsidian/app.json
+}
